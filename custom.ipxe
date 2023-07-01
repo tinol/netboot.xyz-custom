@@ -16,14 +16,16 @@ choose proxmox_choice || goto proxmox_exit
 goto ${proxmox_choice}
 
 :pve-serial
-set params quiet proxtui nomodeset console=ttyS1,115200
+set params proxtui nomodeset console=ttyS1,115200
 goto boot-pve
 
 :boot-pve
+set kernel_url ${live_endpoint}/asset-mirror/releases/download/8.0-2-9402a564/
+set proxmox_version 8.0-2
 imgfree
-kernel http://muc.thicc.de/pve8/linux26 ramdisk_size=16777216 rw ${params} initrd=initrd.magic ${cmdline}
-initrd http://muc.thicc.de/pve8/initrd.img
-initrd http://muc.thicc.de/pve8/initrd2.img
+kernel ${kernel_url}vmlinuz ramdisk_size=16777216 rw quiet ${params} initrd=initrd.magic ${cmdline}
+initrd ${kernel_url}initrd
+initrd http://muc.thicc.de/pve8/init /init mode=755
 initrd http://muc.thicc.de/pve8/proxmox.iso /proxmox.iso
 boot
 

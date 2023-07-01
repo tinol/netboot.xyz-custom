@@ -16,7 +16,7 @@ choose proxmox_choice || goto proxmox_exit
 goto ${proxmox_choice}
 
 :pve-serial
-set params splash=silent proxtui console=ttyS1,115200
+set params splash=verbose proxtui nomodeset console=ttyS1,115200
 goto boot-pve
 
 :boot-pve

@@ -23,7 +23,7 @@ goto boot-pve
 set kernel_url ${live_endpoint}/asset-mirror/releases/download/8.0-2-9402a564/
 set proxmox_version 8.0-2
 imgfree
-kernel ${kernel_url}vmlinuz ramdisk_size=16777216 rw quiet ${params} initrd=initrd.magic ${cmdline}
+kernel ${kernel_url}vmlinuz ramdisk_size=16777216 rw ${params} initrd=initrd.magic ${cmdline}
 initrd ${kernel_url}initrd
 initrd http://muc.thicc.de/proxmox-ve_${proxmox_version}.iso /proxmox.iso
 boot

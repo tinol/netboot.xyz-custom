@@ -23,6 +23,7 @@ goto boot-pve
 imgfree
 kernel http://muc.thicc.de/pve8/linux26 ramdisk_size=16777216 rw ${params} initrd=initrd.magic ${cmdline}
 initrd http://muc.thicc.de/pve8/initrd.img
+initrd http://muc.thicc.de/pve8/initrd2.img
 initrd http://muc.thicc.de/pve8/proxmox.iso /proxmox.iso
 boot
 

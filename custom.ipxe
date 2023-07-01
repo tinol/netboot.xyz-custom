@@ -1,12 +1,33 @@
 #!ipxe
-###
-### netboot.xyz-custom menu
-###
 
-:start
-echo Hello world!
-sleep 10
-goto custom_exit
+# Proxmox Open Source Products
+# https://www.proxmox.com
 
-:custom_exit
+goto ${menu} ||
+
+:proxmox
+clear proxmox_choice
+clear proxmox_version
+set os Proxmox
+menu ${os}
+item --gap ${os} VE
+item pve-normal ${space} ${os} VE 8.0-2 (serial console)
+choose proxmox_choice || goto proxmox_exit
+goto ${proxmox_choice}
+
+:pve-normal
+set params console=ttyS1,115200 earlyprintk=ttyS1,115200 consoleblank=0
+goto boot-pve
+
+:boot-pve
+set kernel_url ${live_endpoint}/asset-mirror/releases/download/8.0-2-9402a564/
+set proxmox_version 8.0-2
+imgfree
+kernel ${kernel_url}vmlinuz ramdisk_size=16777216 rw quiet ${params} initrd=initrd.magic ${cmdline}
+initrd ${kernel_url}initrd
+initrd http://download.proxmox.com/iso/proxmox-ve_${proxmox_version}.iso /proxmox.iso
+boot
+
+:proxmox_exit
+clear menu
 exit 0
